@@ -1,7 +1,7 @@
-
 # Chrome Extension for LinkedIn Automation
 
 This Chrome extension automates two key tasks on LinkedIn:
+
 1. **Unfollow** users you are following.
 2. **Send connection requests** to people on LinkedIn.
 
@@ -13,7 +13,7 @@ It allows you to choose between these two tasks, runs them in the background, an
 
 - **Unfollow Automation**: Automatically unfollows users you follow on LinkedIn.
 - **Connect Automation**: Automatically sends connection requests to people on LinkedIn.
-- **Start/Stop Control**: Start and stop the automation with one click. The page refreshes when the process is stopped.
+- **Start/Stop Control**: Start and stop the automation with one click. The page refreshes when the process is stopped..
 
 ---
 
@@ -27,14 +27,17 @@ It allows you to choose between these two tasks, runs them in the background, an
 ### Installation
 
 1. **Clone or Download this repository** to your local machine.
-    ```bash
-    git clone https://github.com/yourusername/linkedin-automation-extension.git
-    ```
-    Or download the ZIP file from GitHub.
+
+   ```bash
+   git clone https://github.com/yourusername/linkedin-automation-extension.git
+   ```
+
+   Or download the ZIP file from GitHub.
 
 2. **Unzip the folder** (if downloaded as ZIP).
 
 3. **Load the extension in Chrome**:
+
    - Open **Google Chrome**.
    - Go to `chrome://extensions/` in the address bar.
    - Enable **Developer Mode** (toggle switch in the top-right corner).
@@ -49,17 +52,14 @@ It allows you to choose between these two tasks, runs them in the background, an
 ## Usage
 
 1. **Go to LinkedIn**: Open LinkedIn in your browser and log in.
-   
 2. **Open the Extension**: Click the LinkedIn Automation extension icon in the toolbar.
 
 3. **Select the Task**:
    - **Toggle** the switch for the task you want:
      - **Unfollow**: Automatically unfollows users.
      - **Connect**: Automatically sends connection requests.
-     
 4. **Start the Automation**:
    - Click the **Start** button to begin the process.
-   
 5. **Stop the Automation**:
    - Click the **Stop** button to stop the process. The page will automatically refresh when stopped.
 
