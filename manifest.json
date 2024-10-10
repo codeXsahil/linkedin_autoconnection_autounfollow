@@ -1,7 +1,7 @@
 {
-  "manifest_version": 3.0,
-  "name": "LinkedIn AutoMationr",
-  "version": "2.0",
+  "manifest_version": 3,
+  "name": "LinkedIn AutoMation",
+  "version": "3.0",
   "description": "Automate LinkedIn unfollowing and connection requests.",
   "permissions": ["activeTab", "scripting"],
   "action": {

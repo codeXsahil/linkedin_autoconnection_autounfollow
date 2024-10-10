@@ -129,7 +129,19 @@ function runConnectScript() {
       const nextButton = document.querySelector("button[aria-label*='Next']");
       if (nextButton) {
         console.log("Next button found, moving to the next page.");
-        setTimeout(() => nextButton.click(), getRandomDelay(1000, 2000));
+
+        // Add random delay for human-like behavior
+        setTimeout(() => {
+          nextButton.click();
+          console.log("Next page clicked.");
+
+          // Add a delay to ensure the page loads fully before searching again
+          setTimeout(() => {
+            console.log("Next page loaded, continuing connection requests.");
+            // Re-run connectToUsers after the page loads
+            connectToUsers();
+          }, getRandomDelay(3000, 5000)); // Adjust the delay time as needed for the page to fully load
+        }, getRandomDelay(1000, 2000));
       } else {
         console.log("No more connection buttons or pages available.");
         return;
@@ -151,8 +163,17 @@ function runConnectScript() {
           );
 
           if (emailVerificationDialog) {
-            console.log("Email verification required, dismissing the dialog.");
+            console.log(
+              "Email verification required, skipping connection request."
+            );
+            // Close the dialog by clicking outside or the body, if necessary
             document.body.click();
+
+            // Continue to the next connection request after skipping
+            connectInterval = setTimeout(
+              connectToUsers,
+              getRandomDelay(2000, 4000)
+            );
           } else {
             const withdrawButton = Array.from(
               document.querySelectorAll(".artdeco-button__text")
@@ -167,6 +188,12 @@ function runConnectScript() {
                 closeButton.click();
                 console.log("Withdraw modal closed.");
               }
+
+              // Continue to the next connection request after skipping
+              connectInterval = setTimeout(
+                connectToUsers,
+                getRandomDelay(2000, 4000)
+              );
             } else {
               const sendButton = Array.from(
                 document.querySelectorAll(".artdeco-button__text")
@@ -178,13 +205,15 @@ function runConnectScript() {
                   sendButton.click();
                   console.log("Connection request sent.");
                 }, getRandomDelay(1000, 2000));
+
+                // Continue to the next connection request
+                connectInterval = setTimeout(
+                  connectToUsers,
+                  getRandomDelay(2000, 4000)
+                );
               }
             }
           }
-          connectInterval = setTimeout(
-            connectToUsers,
-            getRandomDelay(2000, 4000)
-          );
         }, getRandomDelay(1000, 2000));
       }, getRandomDelay(1000, 2000));
     }
