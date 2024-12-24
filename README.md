@@ -29,7 +29,7 @@ It allows you to choose between these two tasks, runs them in the background, an
 1. **Clone or Download this repository** to your local machine.
 
    ```bash
-   git clone https://github.com/yourusername/linkedin-automation-extension.git
+   git clone https://github.com/codeXsahil/linkedin-automation-extension.git
    ```
 
    Or download the ZIP file from GitHub.

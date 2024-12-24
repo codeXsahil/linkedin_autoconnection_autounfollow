@@ -121,6 +121,9 @@ function runConnectScript() {
   };
 
   const connectToUsers = () => {
+    const getRandomDelay = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1)) + min;
+
     const connectButtons = Array.from(
       document.querySelectorAll(".artdeco-button--secondary")
     ).filter((button) => button.innerText.trim() === "Connect");
@@ -130,17 +133,14 @@ function runConnectScript() {
       if (nextButton) {
         console.log("Next button found, moving to the next page.");
 
-        // Add random delay for human-like behavior
         setTimeout(() => {
           nextButton.click();
           console.log("Next page clicked.");
 
-          // Add a delay to ensure the page loads fully before searching again
           setTimeout(() => {
             console.log("Next page loaded, continuing connection requests.");
-            // Re-run connectToUsers after the page loads
-            connectToUsers();
-          }, getRandomDelay(3000, 5000)); // Adjust the delay time as needed for the page to fully load
+            connectToUsers(); // Re-run the function
+          }, getRandomDelay(3000, 5000));
         }, getRandomDelay(1000, 2000));
       } else {
         console.log("No more connection buttons or pages available.");
@@ -151,66 +151,72 @@ function runConnectScript() {
       setTimeout(() => {
         connectButton.click();
         console.log("Connect button clicked.");
+
         setTimeout(() => {
-          const emailVerificationDialog = Array.from(
-            document.querySelectorAll("input[type='email']")
-          ).some(
-            (input) =>
-              input.parentElement &&
-              input.parentElement.innerText.includes(
-                "To verify this member knows you, please enter their email to connect."
-              )
+          const sendButton = Array.from(
+            document.querySelectorAll("span.artdeco-button__text")
+          ).find(
+            (element) => element.innerText.trim().toLowerCase() === "send"
           );
 
-          if (emailVerificationDialog) {
-            console.log(
-              "Email verification required, skipping connection request."
-            );
-            // Close the dialog by clicking outside or the body, if necessary
-            document.body.click();
+          if (sendButton) {
+            console.log("Send button found. Clicking it.");
+            sendButton.click();
 
-            // Continue to the next connection request after skipping
-            connectInterval = setTimeout(
-              connectToUsers,
-              getRandomDelay(2000, 4000)
-            );
+            setTimeout(() => {
+              console.log("Connection request sent via Send button.");
+              connectToUsers(); // Continue to the next connection request
+            }, getRandomDelay(1000, 2000));
           } else {
-            const withdrawButton = Array.from(
-              document.querySelectorAll(".artdeco-button__text")
-            ).find((button) => button.innerText.trim() === "Withdraw");
+            console.log("Send button not found. Proceeding to other checks.");
 
-            if (withdrawButton) {
-              console.log("Withdraw button encountered, skipping request.");
-              const closeButton = document.querySelector(
-                ".artdeco-modal__dismiss"
-              );
-              if (closeButton) {
-                closeButton.click();
-                console.log("Withdraw modal closed.");
-              }
+            const emailVerificationDialog = Array.from(
+              document.querySelectorAll("input[type='email']")
+            ).some(
+              (input) =>
+                input.parentElement &&
+                input.parentElement.innerText.includes(
+                  "To verify this member knows you, please enter their email to connect."
+                )
+            );
 
-              // Continue to the next connection request after skipping
-              connectInterval = setTimeout(
-                connectToUsers,
-                getRandomDelay(2000, 4000)
+            if (emailVerificationDialog) {
+              console.log(
+                "Email verification required, skipping connection request."
               );
+              document.body.click();
+
+              setTimeout(connectToUsers, getRandomDelay(2000, 4000));
             } else {
-              const sendButton = Array.from(
+              const withdrawButton = Array.from(
                 document.querySelectorAll(".artdeco-button__text")
-              ).find(
-                (button) => button.innerText.trim() === "Send without a note"
-              );
-              if (sendButton) {
-                setTimeout(() => {
-                  sendButton.click();
-                  console.log("Connection request sent.");
-                }, getRandomDelay(1000, 2000));
+              ).find((button) => button.innerText.trim() === "Withdraw");
 
-                // Continue to the next connection request
-                connectInterval = setTimeout(
-                  connectToUsers,
-                  getRandomDelay(2000, 4000)
+              if (withdrawButton) {
+                console.log("Withdraw button encountered, skipping request.");
+                const closeButton = document.querySelector(
+                  ".artdeco-modal__dismiss"
                 );
+                if (closeButton) {
+                  closeButton.click();
+                  console.log("Withdraw modal closed.");
+                }
+                setTimeout(connectToUsers, getRandomDelay(2000, 4000));
+              } else {
+                const sendWithoutNoteButton = Array.from(
+                  document.querySelectorAll(".artdeco-button__text")
+                ).find(
+                  (button) => button.innerText.trim() === "Send without a note"
+                );
+
+                if (sendWithoutNoteButton) {
+                  setTimeout(() => {
+                    sendWithoutNoteButton.click();
+                    console.log("Connection request sent without a note.");
+                  }, getRandomDelay(1000, 2000));
+
+                  setTimeout(connectToUsers, getRandomDelay(2000, 4000));
+                }
               }
             }
           }
